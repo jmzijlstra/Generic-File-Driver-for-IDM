@@ -39,4 +39,9 @@ public class SysoutTrace implements TraceInterface{
 		return 99;
 	}
 
+	@Override
+	public void trace(int arg0, int arg1, String paramString) {
+		System.out.println(paramString);
+	}
+
 }

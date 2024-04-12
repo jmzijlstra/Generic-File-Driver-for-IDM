@@ -19,12 +19,6 @@
  *******************************************************************************/
 package info.vancauwenberge.filedriver.filereader.xls;
 
-import info.vancauwenberge.filedriver.api.AbstractStrategy;
-import info.vancauwenberge.filedriver.api.IFileReadStrategy;
-import info.vancauwenberge.filedriver.exception.ReadException;
-import info.vancauwenberge.filedriver.filepublisher.IPublisher;
-import info.vancauwenberge.filedriver.shim.driver.GenericFileDriverShim;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,12 +32,19 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 
 import com.novell.nds.dirxml.driver.Trace;
 import com.novell.nds.dirxml.driver.xds.Constraint;
 import com.novell.nds.dirxml.driver.xds.DataType;
 import com.novell.nds.dirxml.driver.xds.Parameter;
 import com.novell.nds.dirxml.driver.xds.XDSParameterException;
+
+import info.vancauwenberge.filedriver.api.AbstractStrategy;
+import info.vancauwenberge.filedriver.api.IFileReadStrategy;
+import info.vancauwenberge.filedriver.exception.ReadException;
+import info.vancauwenberge.filedriver.filepublisher.IPublisher;
+import info.vancauwenberge.filedriver.shim.driver.GenericFileDriverShim;
 
 public class XlsFileReader extends AbstractStrategy implements IFileReadStrategy {
 	private enum Parameters implements IStrategyParameters{
@@ -172,7 +173,7 @@ public class XlsFileReader extends AbstractStrategy implements IFileReadStrategy
 				while (iter.hasNext()) {
 					HSSFCell element = (HSSFCell) iter.next();
 					String value = element.getStringCellValue();
-					fields[element.getCellNum()]=value;
+					fields[element.getColumnIndex()]=value;
 				}
 				//We might have some nulls in the array. Default them.
 				for (int i = 0; i < fields.length; i++) {
@@ -201,7 +202,7 @@ public class XlsFileReader extends AbstractStrategy implements IFileReadStrategy
 				HSSFCell cel = row.getCell(i);
 				if (cel != null){
 					String value="";
-					if (cel.getCellType()==HSSFCell.CELL_TYPE_NUMERIC){
+					if (cel.getCellType()==CellType.NUMERIC){
 //						TODO: make this configurable: conversion from double to string
 						value = cel.getNumericCellValue()+"";
 					}else{

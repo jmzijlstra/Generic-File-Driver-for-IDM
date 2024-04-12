@@ -51,5 +51,10 @@ public final class TestTrace implements TraceInterface
 	public void trace(int i, XmlDocument xmldocument) {
 		System.out.println(xmldocument);
 	}
+
+	@Override
+	public void trace(int arg0, int arg1, String s) {
+		System.out.println(s);
+	}
 	
 }

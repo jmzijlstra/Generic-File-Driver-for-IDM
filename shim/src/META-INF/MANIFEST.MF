@@ -1,9 +1,8 @@
 Manifest-Version: 1.0
 Ant-Version: Apache Ant 1.8.2
-Created-By: 1.6.0_24-b24 (Sun Microsystems Inc.)
+Created-By: 11.0.22+7-LTS (Azul Zulu)
 Built-By: Stefaan Van Cauwenberge
 Implementation-Vendor: VanCauwenberge.info
 Implementation-Title: Generic File Driver
-Implementation-Version: 1.2b
-Built-Date: 2019-01-08 22:53:13
-
+Implementation-Version: 1.3
+Built-Date: 2024-04-02 09:39:00

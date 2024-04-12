@@ -21,6 +21,7 @@ package info.vancauwenberge.filedriver.shim;
 
 import info.vancauwenberge.filedriver.Build;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -75,12 +76,16 @@ public abstract class AbstractShim {
         if (header != null){
         	try{
         		//We need 2 classes in order for MDC to work
+        		Class.forName("org.apache.log4j.MDC");
         		Class.forName("org.slf4j.impl.StaticMDCBinder");
         		Class<?> c = Class.forName("org.slf4j.MDC");
         		Method m =c.getMethod("put", String.class, String.class);
         		m.invoke(null, "Trace", header);
         		if (trace != null)
         			trace.trace("SLF4J MDC set to:"+header,3);
+        	}catch (ClassNotFoundException e) {
+        		if (trace != null)
+        			trace.trace("ITE: SLF4J not initialized. MDC not configured.",0);        		
         	}catch (Exception e) {
         		if (trace != null)
         			trace.trace("SLF4J not found. MDC not configured.",3);
